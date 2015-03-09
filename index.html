@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+<title>̶s̶l̶e̶e̶p̶ ̶m̶o̶d̶e̶</title>
+<style>
+img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform:translate(-50%,-50%);
+	transform:translate(-50%,-50%);
+	display:none;
+}
+
+img.visible {
+	display: block;
+}
+</style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var testImgCount = 5;
+
+var testSrcs = (function(){
+	var i = -1;
+	var value = [];
+	while (++i  < testImgCount) {
+		var size = Math.round((Math.random() * 100)) + 900;
+		value.push('http://placehold.it/'+size+'x'+size+'.gif');
+	}
+
+	return value;
+})();
+
+var data = testSrcs;
+
+var els = data.map(function(d) {
+	var img = document.createElement('img');
+	img.setAttribute('src', d);
+
+	document.body.appendChild(img);
+	return img;
+});
+
+var counter = 0;
+
+var tick = function() {
+	els.forEach(function(el) {
+		el.classList.remove('visible');
+	});
+
+	var pos = counter % data.length;
+
+	els[pos].classList.add('visible');
+
+	++counter;
+}
+
+tick();
+
+window.setInterval(tick, 5000)
+
+
+</script>
+
+</body>
