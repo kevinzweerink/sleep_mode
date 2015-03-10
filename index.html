@@ -2,6 +2,51 @@
 <head>
 <title>̶s̶l̶e̶e̶p̶ ̶m̶o̶d̶e̶</title>
 <style>
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 img {
 	position: absolute;
 	top: 50%;
@@ -11,39 +56,171 @@ img {
 	display:none;
 }
 
+.hidden {
+	display: none;
+}
+
+.slide-block-template {
+	display: none;
+}
+
 img.visible {
 	display: block;
+}
+
+#slides-form {
+	width: 50%;
+	margin: auto;
+	padding-top: 5rem;
+}
+
+.slide-block {
+	margin-bottom: 2em;
+}
+
+.slide-block h2 {
+	font-weight: bold;
+	margin-bottom: 2rem;
+}
+
+.slide-block fieldset {
+	margin-bottom: 1em;
 }
 </style>
 </head>
 <body>
 
+<div class="slide-show">
+
+</div>
+
+<form id="slides-form">
+
+<div class="slide-block-template">
+	<h2>Slide</h2>
+	<fieldset class="slide-title-set">
+		<label>Title</label>
+		<input class="slide-title" type="text">
+	</fieldset>
+	<fieldset class="slide-creator-set">
+		<label>Creator</label>
+		<input class="slide-creator" type="text">
+	</fieldset>
+	<fieldset class="slide-source-set">
+		<label>URL (Don't forget http://) or Embed code (yt &amp; vimeo)</label>
+		<input class="slide-source" type="text">
+	</fieldset>
+	<fieldset class="slide-type-set">
+		<label>Slide type</label>
+		<select class="slide-type">
+			<option value="image">Image</option>
+			<option value="vimeo">Vimeo</option>
+			<option value="youtube">Youtube</option>
+		</select>
+	</fieldset>
+</div>
+
+<div class="slide-block">
+	<h2>Slide</h2>
+	<fieldset class="slide-title-set">
+		<label>Title</label>
+		<input class="slide-title" type="text">
+	</fieldset>
+	<fieldset class="slide-creator-set">
+		<label>Creator</label>
+		<input class="slide-creator" type="text">
+	</fieldset>
+	<fieldset class="slide-source-set">
+		<label>URL (Don't forget http://) or Embed code (yt &amp; vimeo)</label>
+		<input class="slide-source" type="text">
+	</fieldset>
+	<fieldset class="slide-type-set">
+		<label>Slide type</label>
+		<select class="slide-type">
+			<option value="image">Image</option>
+			<option value="vimeo">Vimeo</option>
+			<option value="youtube">Youtube</option>
+		</select>
+	</fieldset>
+</div>
+
+<div class="slide-block">
+	<h2>Slide</h2>
+	<fieldset class="slide-title-set">
+		<label>Title</label>
+		<input class="slide-title" type="text">
+	</fieldset>
+	<fieldset class="slide-creator-set">
+		<label>Creator</label>
+		<input class="slide-creator" type="text">
+	</fieldset>
+	<fieldset class="slide-source-set">
+		<label>URL (Don't forget http://) or Embed code (yt &amp; vimeo)</label>
+		<input class="slide-source" type="text">
+	</fieldset>
+	<fieldset class="slide-type-set">
+		<label>Slide type</label>
+		<select class="slide-type">
+			<option value="image">Image</option>
+			<option value="vimeo">Vimeo</option>
+			<option value="youtube">Youtube</option>
+		</select>
+	</fieldset>
+</div>
+
+<button class="new-slide" value="Add another slide">Add another slide</button>
+
+<button class="done" value="Done">Done</button>
+
+</form>
+
 <script type="text/javascript">
 
-var testImgCount = 5;
+NodeList.prototype.map = Array.prototype.map;
 
-var testSrcs = (function(){
-	var i = -1;
-	var value = [];
-	while (++i  < testImgCount) {
-		var size = Math.round((Math.random() * 100)) + 900;
-		value.push('http://placehold.it/'+size+'x'+size+'.gif');
-	}
+var newSlideButton = document.querySelector('.new-slide');
+var doneButton = document.querySelector('.done');
+var slidesForm = document.querySelector('#slides-form');
+var slideShow = document.querySelector('.slide-show');
+var data = [];
 
-	return value;
-})();
-
-var data = testSrcs;
-
-var els = data.map(function(d) {
-	var img = document.createElement('img');
-	img.setAttribute('src', d);
-
-	document.body.appendChild(img);
-	return img;
+newSlideButton.addEventListener('click', function(e) {
+	e.preventDefault();
+	var block = document.querySelector('.slide-block-template').cloneNode(true);
+	block.classList.add('slide-block');
+	block.classList.remove('slide-block-template');
+	slidesForm.insertBefore(block, newSlideButton);
 });
 
+doneButton.addEventListener('click', function(e) {
+	e.preventDefault();
+	var slides = document.querySelectorAll('.slide-block');
+	var slidesData = slides.map(function(sb) {
+		var data = {},
+				select = sb.querySelector('.slide-type');
+
+		data.title = sb.querySelector('.slide-title').value;
+		data.creator = sb.querySelector('.slide-creator').value;
+		data.src = sb.querySelector('.slide-source').value;
+		data.type = select.options[select.selectedIndex].text;
+
+		return data;
+	});
+
+	data = slidesData;
+
+	launchShow(data);
+});
+
+window.addEventListener('keyup', function(e) {
+	if (e.keyCode == 27) {
+		stopShow();
+	}
+})
+
 var counter = 0;
+
+var els;
 
 var tick = function() {
 	els.forEach(function(el) {
@@ -57,9 +234,30 @@ var tick = function() {
 	++counter;
 }
 
-tick();
+var launchShow = function(data) {
 
-window.setInterval(tick, 5000)
+	els = data.map(function(d) {
+		var img = document.createElement('img');
+		img.setAttribute('src', d.src);
+
+		slideShow.appendChild(img);
+		return img;
+	});
+
+	window.setInterval(tick, 5000);
+	tick();
+
+	slidesForm.classList.add('hidden');
+
+}
+
+var stopShow = function() {
+	window.clearInterval();
+	while(slideShow.firstChild) {
+		slideShow.removeChild(slideShow.firstChild);
+	}
+	slidesForm.classList.remove('hidden');
+}
 
 
 </script>
